@@ -2,7 +2,7 @@
 
 Generates synthetic dirty healthcare data: clean data from Synthea, run through a
 Python error-injection pipeline, producing the bronze-layer input for a separate
-downstream project, Project Hadur (its Airflow POC in particular — see `data/*/poc/`).
+downstream project, Project Hadur (its Airflow POC in particular — see `data/poc/`).
 
 ## Pipeline
 
@@ -20,7 +20,7 @@ needs to change, change the generation parameters/code and regenerate.
 ## Commands
 
 ```
-./synthea/run.sh              # regenerate data/clean_input/poc/ via Dockerized Synthea
+./synthea/run.sh              # regenerate data/poc/clean_input/ via Dockerized Synthea
 uv sync                       # install Python deps
 uv run pytest                 # run tests
 uv run ruff check .           # lint
@@ -33,16 +33,18 @@ uv run ruff format .          # format
 - `src/dirty_data_factory/` — Python error-injection package.
 - `tests/` — Python tests (pytest).
 - `pyproject.toml` / `uv.lock` — Python project manifest and lockfile (`uv`).
-- `data/clean_input/poc/` — Synthea output, committed (small POC dataset).
-- `data/dirty_output/poc/` — error-injected output, committed (small POC dataset).
+- `data/poc/clean_input/` — Synthea output, committed (small POC dataset).
+- `data/poc/dirty_output/` — error-injected output, committed (small POC dataset).
 - `.github/workflows/ci.yml` — lints and tests the Python package on every push/PR.
-- `.github/workflows/synthea.yml` — regenerates `data/clean_input/poc/` and fails if it
+- `.github/workflows/synthea.yml` — regenerates `data/poc/clean_input/` and fails if it
   doesn't match what's committed, to catch non-determinism.
 
-`data/clean_input/` and `data/dirty_output/` are committed directly for POC-sized datasets,
-alongside the seeds/scripts/config that regenerate them identically. If a dataset
-stops being POC-sized, that's a signal to introduce Git LFS or DVC rather than
-keep committing raw files — don't do this preemptively.
+`data/poc/clean_input/` and `data/poc/dirty_output/` are committed directly for POC-sized
+datasets, alongside the seeds/scripts/config that regenerate them identically —
+as long as they fit within GitHub's file/repo size limits. Full-scale datasets
+will not be pushed to Git at all; they're regenerated locally via the same
+seeds/scripts instead. If that becomes a recurring need, that's the signal to
+introduce Git LFS or DVC — don't do this preemptively.
 
 ## Conventions
 

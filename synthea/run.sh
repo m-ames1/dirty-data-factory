@@ -24,7 +24,7 @@ IMAGE_TAG="dirty-data-factory-synthea:${SYNTHEA_REF}"
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
-OUTPUT_DIR="${REPO_ROOT}/data/clean_input/poc"
+OUTPUT_DIR="${REPO_ROOT}/data/poc/clean_input"
 
 docker build --build-arg "SYNTHEA_REF=${SYNTHEA_REF}" -t "${IMAGE_TAG}" "${SCRIPT_DIR}"
 
