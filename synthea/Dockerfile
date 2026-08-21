@@ -1,13 +1,14 @@
 # Builds and runs a pinned version of Synthea (https://github.com/synthetichealth/synthea)
-# so that "clean" synthetic healthcare data is byte-identical for anyone who builds this
-# image, regardless of what JDK (if any) they have installed locally.
+# so that "clean" synthetic healthcare data is ~98% byte-identical (see
+# synthea/run.sh for why it isn't exact) for anyone who builds this image,
+# regardless of what JDK (if any) they have installed locally.
 #
 # Build:
 #   docker build -t dirty-data-factory-synthea:v4.0.0 synthea/
 #
 # Run (generates patients into ./output inside the container — mount a host
 # directory there to capture the result, see synthea/run.sh):
-#   docker run --rm -v "$(pwd)/data/clean/poc:/synthea/output" \
+#   docker run --rm -v "$(pwd)/data/clean_input/poc:/synthea/output" \
 #     dirty-data-factory-synthea:v4.0.0 -s 42 -p 100 Massachusetts
 
 FROM eclipse-temurin:17-jdk-jammy
