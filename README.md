@@ -8,17 +8,18 @@ raw dataset consumed by [Project Hadur](#relationship-to-project-hadur).
 
 ```
 Synthea (Java, Dockerized, pinned version)
-    -> clean synthetic healthcare data  (data/clean/)
+    -> clean synthetic healthcare data  (data/poc/clean_input/)
     -> Python error-injection pipeline  (src/dirty_data_factory/)
-    -> dirty healthcare data            (data/dirty/)  <- bronze input for Project Hadur
+    -> dirty healthcare data            (data/poc/dirty_output/)  <- bronze input for Project Hadur
 ```
 
-Both stages are deterministic and reproducible: the Synthea stage is pinned to an
+Both stages are deterministic and seeded: the Synthea stage is pinned to an
 exact version and seed via Docker, and the Python stage will be seeded the same way
-once it exists. Anyone cloning this repo should be able to regenerate byte-identical
-output at either stage.
+once it exists. Anyone cloning this repo should be able to regenerate ~98%
+byte-identical output at the Synthea stage (see "Generating the clean data" below
+for why it isn't exact).
 
-The first dataset in this repo (`*/poc/`) is a small dataset for Project Hadur's
+The first dataset in this repo (`data/poc/`) is a small dataset for Project Hadur's
 Airflow proof-of-concept — not the full-scale dataset.
 
 ## Prerequisites
@@ -34,10 +35,13 @@ Airflow proof-of-concept — not the full-scale dataset.
 ./synthea/run.sh
 ```
 
-This builds a Docker image pinned to Synthea `v4.0.0` and JDK 17, then runs it with
-a fixed seed/population/state (see `synthea/run.sh` for the exact parameters) into
-`data/clean/poc/`. Re-running it reproduces the same output, because both the
-Synthea version and the generation parameters are pinned in that script.
+This builds a Docker image pinned to Synthea `v4.0.0` and JDK 17, then runs it
+with fixed seeds/population/state (see `synthea/run.sh` for the exact
+parameters) into `data/poc/clean_input/`. Re-running it reproduces ~98%
+byte-identical output — Synthea has at least one internal randomness source
+not covered by its documented seed flags, so a small percentage of patient
+records may differ by a day in BIRTHDATE between runs. This is a known
+Synthea limitation, not something this repo's scripts control.
 
 ## Generating the dirty data (Python)
 
@@ -56,14 +60,15 @@ designed — this section will be filled in once it exists.
 synthea/            Dockerfile + run script for the pinned Synthea build
 src/dirty_data_factory/   Python error-injection code
 tests/               Python tests
-data/clean/          Synthea output (committed for the POC dataset)
-data/dirty/          Error-injected output (committed for the POC dataset)
+data/poc/clean_input/    Synthea output (committed for the POC dataset)
+data/poc/dirty_output/   Error-injected output (committed for the POC dataset)
 ```
 
-Both `data/clean/` and `data/dirty/` are committed directly for the POC dataset
-(they're small), alongside the scripts/seeds needed to regenerate them from
-scratch. If datasets grow beyond POC size in later phases, revisit with Git LFS
-or DVC instead of raw commits.
+Both `data/poc/clean_input/` and `data/poc/dirty_output/` are committed directly for
+the POC dataset (they're small enough to fit GitHub's size limits), alongside
+the scripts/seeds needed to regenerate them from scratch. Full-scale datasets
+will not be pushed to Git — they're regenerated locally instead. Revisit with
+Git LFS or DVC only if that local-regeneration workflow stops being enough.
 
 ## Relationship to Project Hadur
 
