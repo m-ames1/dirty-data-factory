@@ -69,3 +69,10 @@ introduce Git LFS or DVC — don't do this preemptively.
   known Synthea limitation, not a bug in this repo's code.
 - Python: `uv` for deps, `ruff` for lint/format, `pytest` for tests. Keep the
   error-injection logic itself in `src/dirty_data_factory/`, not in ad hoc scripts.
+
+## Before committing
+
+Always scan the staged diff for personal or sensitive content before every
+`git commit` — no exceptions. Pay special attention to notes added to tracked
+files like `CLAUDE.md`, not just `.env`/credentials. Flag findings before
+committing, not after. In an automated commit flow, stop and have the user review.
