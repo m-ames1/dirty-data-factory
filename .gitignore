@@ -12,3 +12,10 @@ __pycache__/
 
 # Env
 .env
+
+# Claude Code (personal/local artifacts; CLAUDE.md and .claude/settings.json stay tracked)
+.claude/settings.local.json
+.claude/worktrees/
+
+# Local planning notes (not promoted to GitHub)
+NEXT_STEPS.md
