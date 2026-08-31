@@ -24,7 +24,7 @@ needs to change, change the generation parameters/code and regenerate.
 uv sync                       # install Python deps
 uv run pytest                 # run tests
 uv run ruff check .           # lint
-uv run ruff format .          # format
+uv run ruff format .          # format (CI runs the --check form; this fixes what it flags)
 ```
 
 ## Repo structure
@@ -38,6 +38,7 @@ uv run ruff format .          # format
 - `.github/workflows/ci.yml` — lints and tests the Python package on every push/PR.
 - `.github/workflows/synthea.yml` — regenerates `data/poc/clean_input/` and fails if it
   doesn't match what's committed, to catch non-determinism.
+- `.github/pull_request_template.md` — checklist prefilled into the body of every new PR.
 
 `data/poc/clean_input/` and `data/poc/dirty_output/` are committed directly for POC-sized
 datasets, alongside the seeds/scripts/config that regenerate them identically —
