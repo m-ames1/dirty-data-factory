@@ -17,5 +17,5 @@ __pycache__/
 .claude/settings.local.json
 .claude/worktrees/
 
-# Local planning notes (not promoted to GitHub)
-NEXT_STEPS.md
+# Local personal working notes (not promoted to GitHub)
+supporting-files/
