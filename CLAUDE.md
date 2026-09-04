@@ -9,6 +9,11 @@ downstream project, Project Hadur (its Airflow POC in particular — see `data/p
 1. **Synthea** (Java, Docker) — generates clean synthetic patient data. Pinned to
    tag `v4.0.0` and JDK 17 in `synthea/Dockerfile`. Never install/run Synthea
    outside Docker — the whole point is that the build+run environment is fixed.
+   Synthea's CSV exporter also writes a per-run metadata JSON manifest (not
+   something this repo adds); `synthea/run.sh` adds a `batchDate` field to it
+   (a business batch date, independent of the manifest's own `runStartTime`).
+   Turning that into a `batch_id` column on rows is Project Hadur's
+   ingestion-time responsibility, not this repo's — the CSVs stay untouched.
 2. **Python error injection** (`src/dirty_data_factory/`) — takes clean data and
    deliberately introduces data quality issues. Not yet designed/implemented.
 
@@ -33,7 +38,8 @@ uv run ruff format .          # format (CI runs the --check form; this fixes wha
 - `src/dirty_data_factory/` — Python error-injection package.
 - `tests/` — Python tests (pytest).
 - `pyproject.toml` / `uv.lock` — Python project manifest and lockfile (`uv`).
-- `data/poc/clean_input/` — Synthea output, committed (small POC dataset).
+- `data/poc/clean_input/` — Synthea output, committed (small POC dataset); one dated
+  subfolder per batch, e.g. `2026-09-01/csv/`, `2026-09-01/metadata/`.
 - `data/poc/dirty_output/` — error-injected output, committed (small POC dataset).
 - `.github/workflows/ci.yml` — lints and tests the Python package on every push/PR.
 - `.github/workflows/synthea.yml` — regenerates `data/poc/clean_input/` and fails if it

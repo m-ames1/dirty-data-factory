@@ -34,7 +34,7 @@ intake and updated occasionally, as opposed to per-visit clinical data.
 | `HEALTHCARE_COVERAGE` | Lifetime total actually paid by insurance (payers) on their behalf. |
 | `INCOME` | Synthetic annual income. Appears to feed Synthea's insurance-affordability logic (the source has income-based plan-eligibility classes), but the exact mechanism isn't confirmed. |
 
-**Sample row** (`data/poc/clean_input/csv/patients.csv`):
+**Sample row** (`data/poc/clean_input/2026-09-01/csv/patients.csv`):
 ```
 Id: ba419d35-0dfe-8af7-347c-eebf02485a56
 BIRTHDATE: 1998-07-20
@@ -66,7 +66,7 @@ list of its own sites.
 | `REVENUE` | **`0.0` for all 322 rows.** Synthea's exporter calls a real revenue accessor here, so this looks like an export-side issue (the accumulator never populated in this run) rather than a hardcoded zero — but that's not confirmed against Synthea source. Don't read anything into this column as-is. |
 | `UTILIZATION` | Count of encounters conducted at this facility. Ranges from 1 up to several hundred — a rough proxy for facility size/activity level. |
 
-**Sample row** (`data/poc/clean_input/csv/organizations.csv`):
+**Sample row** (`data/poc/clean_input/2026-09-01/csv/organizations.csv`):
 ```
 Id: df6473cf-a70b-3401-b1ac-8d213ab31d86
 NAME: CALLEN LORDE COMM HEALTH CENTER
@@ -102,7 +102,7 @@ who works where, what they specialize in, how active they are.
 | `ENCOUNTERS` | Count of encounters this provider has conducted. Ranges up to 600+ in this dataset. |
 | `PROCEDURES` | **`0` for all 322 rows** — same pattern as `organizations.REVENUE` (a real accessor that comes back empty in this run). Looks like an export-side issue, not confirmed against Synthea source. Not real signal. |
 
-**Sample row** (`data/poc/clean_input/csv/providers.csv`):
+**Sample row** (`data/poc/clean_input/2026-09-01/csv/providers.csv`):
 ```
 Id: a3e5bfbd-414d-365f-a611-34f61a0ed0cc
 ORGANIZATION: df6473cf-a70b-3401-b1ac-8d213ab31d86  (CALLEN LORDE COMM HEALTH CENTER)
@@ -153,7 +153,7 @@ anything a clinician would see.
 | `QOLS_AVG` | Average Quality-Of-Life Score across this payer's members — a Synthea-internal synthetic health-outcome metric, roughly 0–1. Note the `NO_INSURANCE` row shows `1.00196...`, slightly *above* 1 — a rounding/aggregation quirk in Synthea's own output on a small sample, not something to read real meaning into. |
 | `MEMBER_MONTHS` | Total member-months of coverage accumulated (sum across all members of how many months each was covered) — a standard insurance-industry utilization metric. Notably `NO_INSURANCE` still accrues member-months (`8472`), i.e. Synthea tracks "months spent uninsured" the same way. |
 
-**Sample row** (`data/poc/clean_input/csv/payers.csv`):
+**Sample row** (`data/poc/clean_input/2026-09-01/csv/payers.csv`):
 ```
 Id: a735bf55-83e9-331a-899d-a82a60b9f60c
 NAME: Medicare | OWNERSHIP: GOVERNMENT

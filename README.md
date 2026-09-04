@@ -28,6 +28,8 @@ Airflow proof-of-concept — not the full-scale dataset.
   local Java install needed.
 - [uv](https://docs.astral-sh.org/uv/) — Python dependency management for the
   error-injection code.
+- [jq](https://jqlang.org/) — used by `synthea/run.sh` to add the batch date to
+  Synthea's metadata JSON after each run.
 
 ## Generating the clean data (Synthea)
 
@@ -37,11 +39,31 @@ Airflow proof-of-concept — not the full-scale dataset.
 
 This builds a Docker image pinned to Synthea `v4.0.0` and JDK 17, then runs it
 with fixed seeds/population/state (see `synthea/run.sh` for the exact
-parameters) into `data/poc/clean_input/`. Re-running it reproduces ~98%
+parameters) into `data/poc/clean_input/<BATCH_DATE>/`. Re-running it reproduces ~98%
 byte-identical output — Synthea has at least one internal randomness source
 not covered by its documented seed flags, so a small percentage of patient
 records may differ by a day in BIRTHDATE between runs. This is a known
 Synthea limitation, not something this repo's scripts control.
+
+Synthea also writes a per-run metadata JSON manifest to `data/poc/clean_input/<BATCH_DATE>/metadata/`
+(runID, seed, patient/provider counts, etc.) — this is Synthea's own CSV exporter
+behavior, not something this repo adds. `synthea/run.sh` adds one more field to it,
+`batchDate`, which identifies which business batch this data belongs to. This is
+distinct from the manifest's own `runStartTime` — `runStartTime` is when Synthea
+actually executed; `batchDate` is a business date that doesn't have to match (the
+POC dataset's `batchDate` is `2026-09-01`, treating it as one historical batch,
+regardless of when it was actually generated). The CSVs themselves aren't touched —
+turning `batchDate` into a `batch_id` column on ingested rows is Project Hadur's
+bronze-layer ingestion responsibility, not this repo's (see "Relationship to
+Project Hadur" below).
+
+`BATCH_DATE` defaults to today (`./synthea/run.sh`), giving each day's run its own
+folder. If a folder for today already exists, the script won't overwrite it — it
+prompts (interactively) or exits with an error (non-interactively, e.g. CI) telling
+you to pick a different date. To target a specific batch date instead — including
+re-running the *same* date deliberately, which overwrites that batch's folder, the
+normal way to iterate on a not-yet-finalized batch — pass it explicitly:
+`BATCH_DATE=2026-10-01 ./synthea/run.sh`.
 
 ## Generating the dirty data (Python)
 
@@ -60,7 +82,7 @@ designed — this section will be filled in once it exists.
 synthea/            Dockerfile + run script for the pinned Synthea build
 src/dirty_data_factory/   Python error-injection code
 tests/               Python tests
-data/poc/clean_input/    Synthea output (committed for the POC dataset)
+data/poc/clean_input/    Synthea output, one dated subfolder per batch (e.g. 2026-09-01/csv/, 2026-09-01/metadata/)
 data/poc/dirty_output/   Error-injected output (committed for the POC dataset)
 ```
 

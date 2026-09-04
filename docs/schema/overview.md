@@ -1,7 +1,7 @@
 # Synthea POC data schema
 
 Reference documentation for the 18 CSVs Synthea produces in
-`data/poc/clean_input/csv/`. Each cluster file covers one real-world domain:
+`data/poc/clean_input/2026-09-01/csv/`. Each cluster file covers one real-world domain:
 what each table represents, what its columns mean, and how it foreign-keys to
 the rest.
 
@@ -232,5 +232,5 @@ where you currently live [PRAPARE]").
   own casing/spelling, including its quirks — e.g. `SPECIALITY` not
   `SPECIALTY`).
 - Sample values are pulled from the actual committed POC dataset
-  (`data/poc/clean_input/csv/`, a 100-patient New York run, seed 42/42,
+  (`data/poc/clean_input/2026-09-01/csv/`, a 100-patient New York run, seed 42/42,
   producing 112 patient rows including deceased) unless noted otherwise.
