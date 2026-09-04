@@ -15,5 +15,6 @@
   "runTimeInSeconds": 17,
   "exporter.years_of_history": "10",
   "state": "New York",
-  "modules": "*"
+  "modules": "*",
+  "batchDate": "2026-09-01"
 }
