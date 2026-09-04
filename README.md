@@ -13,11 +13,11 @@ Synthea (Java, Dockerized, pinned version)
     -> dirty healthcare data            (data/poc/dirty_output/)  <- bronze input for Project Hadur
 ```
 
-Both stages are seeded and version-pinned for intentional, controlled
-generation — the Synthea stage via Docker, and the Python stage the same way
-once it exists. This is about controlling *what the data looks like*, not
-about reproducing a specific prior run byte-for-byte: every regeneration is
-its own new batch (see "Generating the clean data" below).
+Both stages are deterministic and seeded: the Synthea stage is pinned to an
+exact version and seed via Docker, and the Python stage will be seeded the same way
+once it exists. Anyone cloning this repo should be able to regenerate ~98%
+byte-identical output at the Synthea stage (see "Generating the clean data" below
+for why it isn't exact).
 
 The first dataset in this repo (`data/poc/`) is a small dataset for Project Hadur's
 Airflow proof-of-concept — not the full-scale dataset.
@@ -39,11 +39,11 @@ Airflow proof-of-concept — not the full-scale dataset.
 
 This builds a Docker image pinned to Synthea `v4.0.0` and JDK 17, then runs it
 with fixed seeds/population/state (see `synthea/run.sh` for the exact
-parameters) into `data/poc/clean_input/<BATCH_DATE>/`. Re-running it is not
-expected to reproduce a previous run's exact output — Synthea's generation is
-sensitive to wall-clock time and has internal randomness not fully covered by
-its seed flags. That's fine: every run is its own new batch, not a replay of
-an old one, and there's no check anywhere expecting byte-for-byte matches.
+parameters) into `data/poc/clean_input/<BATCH_DATE>/`. Re-running it reproduces ~98%
+byte-identical output — Synthea has at least one internal randomness source
+not covered by its documented seed flags, so a small percentage of patient
+records may differ by a day in BIRTHDATE between runs. This is a known
+Synthea limitation, not something this repo's scripts control.
 
 Synthea also writes a per-run metadata JSON manifest to `data/poc/clean_input/<BATCH_DATE>/metadata/`
 (runID, seed, patient/provider counts, etc.) — this is Synthea's own CSV exporter

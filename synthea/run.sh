@@ -6,12 +6,14 @@
 # separate — see the comment further down — it identifies which batch a run
 # belongs to, not what the data looks like, and is meant to change per run.
 #
-# -s/-cs pin Synthea's two documented seeds, and --generate.thread_pool_size=1
-# keeps generation single-threaded. Synthea's own generation is sensitive to
-# wall-clock time (its reference/end date defaults to "today") and has
-# internal randomness not fully covered by either seed, so re-running this
-# script is not expected to reproduce a previous batch's exact output — every
-# run is its own new batch, not a replay of an old one.
+# Reproducibility: -s/-cs pin Synthea's two documented seeds, and
+# --generate.thread_pool_size=1 forces single-threaded generation to avoid
+# non-deterministic write ordering. Even so, re-running with identical
+# parameters produces output that's only ~98% byte-identical, not exact —
+# Synthea has at least one internal RNG source not covered by either seed,
+# which can shift a small percentage of patients' BIRTHDATE by a day and
+# cascade into tiny floating-point differences in payer cost aggregates.
+# This is a known Synthea limitation, not a bug in this script.
 set -euo pipefail
 
 SEED=42
