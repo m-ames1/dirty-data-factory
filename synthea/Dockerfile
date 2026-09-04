@@ -8,7 +8,7 @@
 #
 # Run (generates patients into ./output inside the container — mount a host
 # directory there to capture the result, see synthea/run.sh):
-#   docker run --rm -v "$(pwd)/data/poc/clean_input:/synthea/output" \
+#   docker run --rm -v "$(pwd)/data/poc/clean_input/<BATCH_DATE>:/synthea/output" \
 #     dirty-data-factory-synthea:v4.0.0 -s 42 -p 100 Massachusetts
 
 FROM eclipse-temurin:17-jdk-jammy
