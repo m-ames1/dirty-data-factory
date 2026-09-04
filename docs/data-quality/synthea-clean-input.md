@@ -1,7 +1,7 @@
 # Data-quality notes: Synthea's clean input
 
 **Scope: the data-quality characteristics of the clean Synthea dataset**
-(`data/poc/clean_input/csv/`) — quirks and null patterns noted while
+(`data/poc/clean_input/2026-09-01/csv/`) — quirks and null patterns noted while
 documenting the schema (`../schema/overview.md`, `../schema/core-entities.md`,
 `../schema/clinical-events.md`, `../schema/financial-billing.md`). It covers
 the clean Synthea output only, not the error-injected output produced from

@@ -72,7 +72,7 @@ from different sections of the same dictionary. This pattern — one
 vocabulary, multiple independent-axis columns — recurs in `conditions.csv`,
 `procedures.csv`, and `observations.csv`.
 
-**Sample row** (`data/poc/clean_input/csv/encounters.csv`):
+**Sample row** (`data/poc/clean_input/2026-09-01/csv/encounters.csv`):
 ```
 Id: ba419d35-0dfe-8af7-2d0c-110156324066
 START: 2012-08-22T11:35:06Z | STOP: 2012-08-22T12:35:06Z
