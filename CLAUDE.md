@@ -17,10 +17,11 @@ downstream project, Project Hadur (its Airflow POC in particular — see `data/p
 2. **Python error injection** (`src/dirty_data_factory/`) — takes clean data and
    deliberately introduces data quality issues. Not yet designed/implemented.
 
-Both stages must be deterministic and seeded so the pipeline is as reproducible
-as possible end to end (Synthea: ~98% byte-identical between runs, not exact —
-see Conventions). Never hand-edit generated output in `data/` — if the data
-needs to change, change the generation parameters/code and regenerate.
+Both stages must be seeded and version-pinned for intentional, controlled
+generation (see Conventions) — not for exact reproducibility across runs.
+There is no check anywhere that expects two runs to match byte-for-byte.
+Never hand-edit generated output in `data/` — if the data needs to change,
+change the generation parameters/code and regenerate.
 
 ## Commands
 
@@ -42,8 +43,6 @@ uv run ruff format .          # format (CI runs the --check form; this fixes wha
   subfolder per batch, e.g. `2026-09-01/csv/`, `2026-09-01/metadata/`.
 - `data/poc/dirty_output/` — error-injected output, committed (small POC dataset).
 - `.github/workflows/ci.yml` — lints and tests the Python package on every push/PR.
-- `.github/workflows/synthea.yml` — regenerates `data/poc/clean_input/` and fails if it
-  doesn't match what's committed, to catch non-determinism.
 - `.github/pull_request_template.md` — checklist prefilled into the body of every new PR.
 
 `data/poc/clean_input/` and `data/poc/dirty_output/` are committed directly for POC-sized
@@ -68,11 +67,12 @@ introduce Git LFS or DVC — don't do this preemptively.
   is what the Python error-injection stage and Project Hadur's ingestion
   actually need. Enforced via `--exporter.csv.export=true`/`--exporter.fhir.export=false`
   (and the hospital/practitioner FHIR variants) in `synthea/run.sh`.
-- Synthea's `-s`/`-cs` seeds and single-threaded generation (`synthea/run.sh`)
-  produce ~98% byte-identical output between runs, not exact — Synthea has at
-  least one internal RNG source not covered by either documented seed, which
-  can shift a small percentage of patients' BIRTHDATE by a day. This is a
-  known Synthea limitation, not a bug in this repo's code.
+- Synthea's generation isn't exactly reproducible run-to-run, even with the
+  same seed — it's sensitive to wall-clock time (reference/end date defaults
+  to "today") and has at least one internal RNG source not covered by its
+  documented seed flags. This is expected, not a bug: reproducing a specific
+  prior run isn't a goal — there is no CI check (or anything else) that
+  expects it.
 - Python: `uv` for deps, `ruff` for lint/format, `pytest` for tests. Keep the
   error-injection logic itself in `src/dirty_data_factory/`, not in ad hoc scripts.
 
