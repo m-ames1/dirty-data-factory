@@ -1,0 +1,56 @@
+# Config for the dirty_data_factory error-injection pipeline.
+# What's eligible (which tables/columns/joins) is fixed in
+# src/dirty_data_factory/catalogue.py; this file only turns injectors on/off
+# and sets rates. Run with: uv run python -m dirty_data_factory
+
+[run]
+seed = 20260904
+# Relative to the repo root (or wherever the process is run from). The root
+# of the batch-dated clean_input tree (e.g. data/poc/clean_input/2026-09-01/csv/) —
+# the pipeline picks the most recent batch automatically. Point this at a
+# csv/ directory directly instead to pin a specific batch or fixture.
+input_dir = "data/poc/clean_input"
+output_dir = "data/poc/dirty_output"
+withhold_manifest = false
+
+[row_level]
+default_rate = 0.02
+
+[row_level.missing_values]
+enabled = true
+rate = 0.03
+
+[row_level.typos]
+enabled = true
+rate = 0.02
+
+[row_level.duplicates]
+enabled = true
+rate = 0.005
+
+[row_level.formatting]
+enabled = true
+rate = 0.05
+
+[row_level.type_mismatch]
+enabled = true
+rate = 0.01
+
+[row_level.date_issues]
+enabled = true
+rate = 0.01
+
+[join_breaking]
+default_rate = 0.005
+
+[join_breaking.orphan_fk]
+enabled = true
+rate = 0.005
+
+[join_breaking.key_format_drift]
+enabled = true
+rate = 0.01
+
+[join_breaking.cardinality_break]
+enabled = true
+rate = 0.002

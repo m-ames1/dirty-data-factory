@@ -1,0 +1,371 @@
+{
+  "by_injector": {
+    "cardinality_break": 224,
+    "date_issues": 187,
+    "duplicates": 1146,
+    "formatting": 8417,
+    "key_format_drift": 169,
+    "missing_values": 7517,
+    "orphan_fk": 1436,
+    "type_mismatch": 735,
+    "typos": 654
+  },
+  "by_table": {
+    "allergies": 20,
+    "careplans": 55,
+    "claims": 2574,
+    "claims_transactions": 6975,
+    "conditions": 623,
+    "devices": 57,
+    "encounters": 1348,
+    "imaging_studies": 28,
+    "immunizations": 147,
+    "medications": 1189,
+    "observations": 4687,
+    "organizations": 9,
+    "patients": 49,
+    "payer_transitions": 99,
+    "payers": 1,
+    "procedures": 2367,
+    "providers": 16,
+    "supplies": 241
+  },
+  "detail": [
+    {
+      "count": 2,
+      "injector": "cardinality_break",
+      "table": "careplans"
+    },
+    {
+      "count": 21,
+      "injector": "cardinality_break",
+      "table": "claims"
+    },
+    {
+      "count": 191,
+      "injector": "cardinality_break",
+      "table": "claims_transactions"
+    },
+    {
+      "count": 8,
+      "injector": "cardinality_break",
+      "table": "encounters"
+    },
+    {
+      "count": 2,
+      "injector": "cardinality_break",
+      "table": "organizations"
+    },
+    {
+      "count": 119,
+      "injector": "date_issues",
+      "table": "claims"
+    },
+    {
+      "count": 68,
+      "injector": "date_issues",
+      "table": "encounters"
+    },
+    {
+      "count": 50,
+      "injector": "duplicates",
+      "table": "claims"
+    },
+    {
+      "count": 483,
+      "injector": "duplicates",
+      "table": "claims_transactions"
+    },
+    {
+      "count": 17,
+      "injector": "duplicates",
+      "table": "conditions"
+    },
+    {
+      "count": 41,
+      "injector": "duplicates",
+      "table": "encounters"
+    },
+    {
+      "count": 25,
+      "injector": "duplicates",
+      "table": "medications"
+    },
+    {
+      "count": 433,
+      "injector": "duplicates",
+      "table": "observations"
+    },
+    {
+      "count": 1,
+      "injector": "duplicates",
+      "table": "patients"
+    },
+    {
+      "count": 96,
+      "injector": "duplicates",
+      "table": "procedures"
+    },
+    {
+      "count": 9,
+      "injector": "formatting",
+      "table": "allergies"
+    },
+    {
+      "count": 36,
+      "injector": "formatting",
+      "table": "careplans"
+    },
+    {
+      "count": 1119,
+      "injector": "formatting",
+      "table": "claims"
+    },
+    {
+      "count": 4862,
+      "injector": "formatting",
+      "table": "claims_transactions"
+    },
+    {
+      "count": 362,
+      "injector": "formatting",
+      "table": "conditions"
+    },
+    {
+      "count": 488,
+      "injector": "formatting",
+      "table": "encounters"
+    },
+    {
+      "count": 28,
+      "injector": "formatting",
+      "table": "imaging_studies"
+    },
+    {
+      "count": 79,
+      "injector": "formatting",
+      "table": "immunizations"
+    },
+    {
+      "count": 661,
+      "injector": "formatting",
+      "table": "medications"
+    },
+    {
+      "count": 8,
+      "injector": "formatting",
+      "table": "patients"
+    },
+    {
+      "count": 629,
+      "injector": "formatting",
+      "table": "procedures"
+    },
+    {
+      "count": 136,
+      "injector": "formatting",
+      "table": "supplies"
+    },
+    {
+      "count": 106,
+      "injector": "key_format_drift",
+      "table": "claims"
+    },
+    {
+      "count": 63,
+      "injector": "key_format_drift",
+      "table": "encounters"
+    },
+    {
+      "count": 10,
+      "injector": "missing_values",
+      "table": "allergies"
+    },
+    {
+      "count": 11,
+      "injector": "missing_values",
+      "table": "careplans"
+    },
+    {
+      "count": 1044,
+      "injector": "missing_values",
+      "table": "claims"
+    },
+    {
+      "count": 127,
+      "injector": "missing_values",
+      "table": "conditions"
+    },
+    {
+      "count": 48,
+      "injector": "missing_values",
+      "table": "devices"
+    },
+    {
+      "count": 371,
+      "injector": "missing_values",
+      "table": "encounters"
+    },
+    {
+      "count": 38,
+      "injector": "missing_values",
+      "table": "immunizations"
+    },
+    {
+      "count": 332,
+      "injector": "missing_values",
+      "table": "medications"
+    },
+    {
+      "count": 4254,
+      "injector": "missing_values",
+      "table": "observations"
+    },
+    {
+      "count": 28,
+      "injector": "missing_values",
+      "table": "patients"
+    },
+    {
+      "count": 99,
+      "injector": "missing_values",
+      "table": "payer_transitions"
+    },
+    {
+      "count": 1077,
+      "injector": "missing_values",
+      "table": "procedures"
+    },
+    {
+      "count": 78,
+      "injector": "missing_values",
+      "table": "supplies"
+    },
+    {
+      "count": 115,
+      "injector": "orphan_fk",
+      "table": "claims"
+    },
+    {
+      "count": 1013,
+      "injector": "orphan_fk",
+      "table": "claims_transactions"
+    },
+    {
+      "count": 53,
+      "injector": "orphan_fk",
+      "table": "conditions"
+    },
+    {
+      "count": 137,
+      "injector": "orphan_fk",
+      "table": "encounters"
+    },
+    {
+      "count": 23,
+      "injector": "orphan_fk",
+      "table": "medications"
+    },
+    {
+      "count": 92,
+      "injector": "orphan_fk",
+      "table": "procedures"
+    },
+    {
+      "count": 3,
+      "injector": "orphan_fk",
+      "table": "providers"
+    },
+    {
+      "count": 426,
+      "injector": "type_mismatch",
+      "table": "claims_transactions"
+    },
+    {
+      "count": 55,
+      "injector": "type_mismatch",
+      "table": "encounters"
+    },
+    {
+      "count": 51,
+      "injector": "type_mismatch",
+      "table": "medications"
+    },
+    {
+      "count": 1,
+      "injector": "type_mismatch",
+      "table": "patients"
+    },
+    {
+      "count": 175,
+      "injector": "type_mismatch",
+      "table": "procedures"
+    },
+    {
+      "count": 27,
+      "injector": "type_mismatch",
+      "table": "supplies"
+    },
+    {
+      "count": 1,
+      "injector": "typos",
+      "table": "allergies"
+    },
+    {
+      "count": 6,
+      "injector": "typos",
+      "table": "careplans"
+    },
+    {
+      "count": 64,
+      "injector": "typos",
+      "table": "conditions"
+    },
+    {
+      "count": 9,
+      "injector": "typos",
+      "table": "devices"
+    },
+    {
+      "count": 117,
+      "injector": "typos",
+      "table": "encounters"
+    },
+    {
+      "count": 30,
+      "injector": "typos",
+      "table": "immunizations"
+    },
+    {
+      "count": 97,
+      "injector": "typos",
+      "table": "medications"
+    },
+    {
+      "count": 7,
+      "injector": "typos",
+      "table": "organizations"
+    },
+    {
+      "count": 11,
+      "injector": "typos",
+      "table": "patients"
+    },
+    {
+      "count": 1,
+      "injector": "typos",
+      "table": "payers"
+    },
+    {
+      "count": 298,
+      "injector": "typos",
+      "table": "procedures"
+    },
+    {
+      "count": 13,
+      "injector": "typos",
+      "table": "providers"
+    }
+  ],
+  "total_changes": 20485
+}
