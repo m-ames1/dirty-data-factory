@@ -69,12 +69,26 @@ normal way to iterate on a not-yet-finalized batch — pass it explicitly:
 
 ```
 uv sync
+uv run python -m dirty_data_factory
+```
+
+Reads the most recent batch under `data/poc/clean_input/`, injects row-level
+errors (missing values, typos, duplicates, formatting inconsistencies, type
+mismatches, date issues) and join-breaking errors (orphan foreign keys,
+key-format drift, cardinality breaks) per `injection_config.toml`, and writes
+the result to `data/poc/dirty_output/<BATCH_DATE>/` — the same batch date as
+the source, so a dirty batch stays traceable to the exact clean batch it came
+from. Alongside the CSVs, that folder gets a `manifest.jsonl` (one record per
+injected change) and a `manifest_summary.json` (counts per injector/table).
+Which tables/columns/joins are eligible is fixed in
+`src/dirty_data_factory/catalogue.py`; the config only turns injectors on/off
+and sets rates. `--seed`/`--config`/`--input`/`--output` override the config
+file for one-off runs.
+
+```
 uv run pytest
 uv run ruff check .
 ```
-
-The error-injection pipeline itself (`src/dirty_data_factory/`) is still being
-designed — this section will be filled in once it exists.
 
 ## Repo structure
 
@@ -83,7 +97,7 @@ synthea/            Dockerfile + run script for the pinned Synthea build
 src/dirty_data_factory/   Python error-injection code
 tests/               Python tests
 data/poc/clean_input/    Synthea output, one dated subfolder per batch (e.g. 2026-09-01/csv/, 2026-09-01/metadata/)
-data/poc/dirty_output/   Error-injected output (committed for the POC dataset)
+data/poc/dirty_output/   Error-injected output, same per-batch dated subfolder as its source
 ```
 
 Both `data/poc/clean_input/` and `data/poc/dirty_output/` are committed directly for

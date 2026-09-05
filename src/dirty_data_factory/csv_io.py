@@ -38,26 +38,32 @@ def write_table(table: Table, path: Path) -> None:
         writer.writerows(table.rows)
 
 
-def resolve_clean_input_dir(input_dir: Path) -> Path:
+def resolve_clean_input(input_dir: Path) -> tuple[Path, str | None]:
     """Accepts either a directory of CSVs directly (test fixtures, explicit
     --input overrides) or a `clean_input`-style root containing one dated
     batch subfolder per run (e.g. `2026-09-01/csv/`) — the real layout
     `synthea/run.sh` produces. Picks the most recent batch by folder name,
     since ISO dates sort lexicographically.
+
+    Returns `(csv_dir, batch_label)`. `batch_label` is the batch folder's
+    name (e.g. `"2026-09-01"`) when one was resolved, or `None` when
+    `input_dir` was already a flat CSV directory with no batch concept —
+    the caller uses this to decide whether the output should be batch-dated
+    too.
     """
     if (input_dir / "patients.csv").exists():
-        return input_dir
+        return input_dir, None
     batch_dirs = sorted(p for p in input_dir.iterdir() if p.is_dir() and (p / "csv").is_dir())
     if not batch_dirs:
         raise FileNotFoundError(f"no batch CSV data found under {input_dir}")
-    return batch_dirs[-1] / "csv"
+    latest = batch_dirs[-1]
+    return latest / "csv", latest.name
 
 
-def load_all_tables(input_dir: Path) -> dict[str, Table]:
-    input_dir = resolve_clean_input_dir(input_dir)
+def load_all_tables(csv_dir: Path) -> dict[str, Table]:
     tables = {}
     for name in ALL_TABLES:
-        path = input_dir / f"{name}.csv"
+        path = csv_dir / f"{name}.csv"
         if not path.exists():
             raise FileNotFoundError(f"expected input file not found: {path}")
         tables[name] = read_table(name, path)

@@ -41,7 +41,9 @@ uv run ruff format .          # format (CI runs the --check form; this fixes wha
 - `pyproject.toml` / `uv.lock` — Python project manifest and lockfile (`uv`).
 - `data/poc/clean_input/` — Synthea output, committed (small POC dataset); one dated
   subfolder per batch, e.g. `2026-09-01/csv/`, `2026-09-01/metadata/`.
-- `data/poc/dirty_output/` — error-injected output, committed (small POC dataset).
+- `data/poc/dirty_output/` — error-injected output, committed (small POC dataset); same
+  per-batch dated subfolder as its source, e.g. `2026-09-01/csv/`, plus that batch's
+  `manifest.jsonl` (every injected change) and `manifest_summary.json`.
 - `.github/workflows/ci.yml` — lints and tests the Python package on every push/PR.
 - `.github/pull_request_template.md` — checklist prefilled into the body of every new PR.
 
