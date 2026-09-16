@@ -1,8 +1,7 @@
-# Dataset documentation
+# Project documentation
 
-Reference documentation for the POC dataset in `data/poc/clean_input/` — the
-clean synthetic healthcare data Synthea produces, before this repo's
-error-injection stage runs against it.
+Reference documentation for this repo: the clean Synthea dataset, and the
+error-injection pipeline that turns it into the dirty output.
 
 ## Contents
 
@@ -28,9 +27,17 @@ error-injection stage runs against it.
   — Synthea's own data-quality quirks in this dataset, and the legitimate
   null / business-logic patterns that can be mistaken for defects.
 
+### `pipeline/` — the error-injection pipeline
+
+- **[pipeline/dirty-output-structure.md](pipeline/dirty-output-structure.md)**
+  — the `dirty_output/` folder layout and the `manifest.jsonl` /
+  `manifest_summary.json` format: what each field means, with examples from
+  the committed POC output.
+
 ## Scope
 
-Everything here describes the clean Synthea output only. The dataset is the
-committed POC run: 100 patients seeded for New York (seed 42/42), producing
-112 patient rows including deceased. Sample values throughout are drawn from
-that run.
+`schema/` and `data-quality/` describe the clean Synthea output only (the
+committed POC run: 100 patients seeded for New York, seed 42/42, 112 patient
+rows including deceased — sample values throughout are drawn from that run).
+`pipeline/` describes this repo's own error-injection stage and its output
+instead.
