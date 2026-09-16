@@ -51,7 +51,7 @@ be blank in **any** Synthea v4.0.0 run. The v4.0.0 CSV exporter writes
 this column unconditionally empty (a `// TODO` placeholder with no logic
 behind it), so population size, specialty mix, and referral modules make
 no difference. Logged in
-[../data-quality/synthea-clean-input.md](../data-quality/synthea-clean-input.md)
+[../synthea-quirks/synthea-clean-input.md](../synthea-quirks/synthea-clean-input.md)
 as an unimplemented-field quirk.
 
 **Sample row** (patient's first ER visit, fully closed, no secondary insurance):

@@ -3,8 +3,8 @@
 **Scope: what the error-injection pipeline writes to
 `data/poc/dirty_output/<BATCH_DATE>/`** — the folder layout, and the format
 of the two manifest files that record what the pipeline changed. It doesn't
-cover the pipeline's internals (injectors, config, catalogue) — that's a
-separate doc still to come.
+cover the pipeline's internals (injectors, config, catalogue) — see
+[injection-internals.md](injection-internals.md) for that.
 
 ## Layout
 
