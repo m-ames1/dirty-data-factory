@@ -81,7 +81,7 @@ CARDINALITY_BREAK_TARGETS = list(KEYED_TABLES)
 
 # missing_values: (table, column) pairs that are normally populated.
 # Deliberately excludes structural keys and columns already documented as
-# legitimately-often-blank in docs/data-quality/synthea-clean-input.md
+# legitimately-often-blank in docs/synthea-quirks/synthea-clean-input.md
 # (e.g. encounters.REASONCODE, claims.SECONDARYPATIENTINSURANCEID) so the
 # injector never inflates a baseline quirk instead of adding a real one.
 MISSING_VALUE_TARGETS: dict[str, list[str]] = {

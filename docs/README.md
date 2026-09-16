@@ -21,14 +21,18 @@ error-injection pipeline that turns it into the dirty output.
 - **[schema/financial-billing.md](schema/financial-billing.md)** — `claims`,
   `claims_transactions`, `payer_transitions`: the revenue-cycle layer.
 
-### `data-quality/`
+### `synthea-quirks/`
 
-- **[data-quality/synthea-clean-input.md](data-quality/synthea-clean-input.md)**
+- **[synthea-quirks/synthea-clean-input.md](synthea-quirks/synthea-clean-input.md)**
   — Synthea's own data-quality quirks in this dataset, and the legitimate
   null / business-logic patterns that can be mistaken for defects.
 
 ### `pipeline/` — the error-injection pipeline
 
+- **[pipeline/injection-internals.md](pipeline/injection-internals.md)** —
+  how `src/dirty_data_factory/` works: module responsibilities, the
+  config/catalogue split, seeding, injector ordering, and what each of the
+  nine injectors does and why. Start here for the pipeline's internals.
 - **[pipeline/dirty-output-structure.md](pipeline/dirty-output-structure.md)**
   — the `dirty_output/` folder layout and the `manifest.jsonl` /
   `manifest_summary.json` format: what each field means, with examples from
@@ -36,7 +40,7 @@ error-injection pipeline that turns it into the dirty output.
 
 ## Scope
 
-`schema/` and `data-quality/` describe the clean Synthea output only (the
+`schema/` and `synthea-quirks/` describe the clean Synthea output only (the
 committed POC run: 100 patients seeded for New York, seed 42/42, 112 patient
 rows including deceased — sample values throughout are drawn from that run).
 `pipeline/` describes this repo's own error-injection stage and its output

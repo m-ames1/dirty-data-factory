@@ -345,7 +345,7 @@ rows, despite `CODE` clearly being SNOMED CT format (same code style as
 `conditions.CODE`/`procedures.CODE`). In tables where `SYSTEM` is
 populated correctly (`conditions.csv`, `procedures.csv`), it reads
 `SNOMED-CT`. Logged in
-[../data-quality/synthea-clean-input.md](../data-quality/synthea-clean-input.md)
+[../synthea-quirks/synthea-clean-input.md](../synthea-quirks/synthea-clean-input.md)
 as an existing Synthea export quirk, not something to read real meaning
 into.
 

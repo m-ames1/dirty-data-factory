@@ -23,7 +23,7 @@ error-injection stage, not the dirty output that stage produces.
 
 ## Data-quality notes
 
-[../data-quality/synthea-clean-input.md](../data-quality/synthea-clean-input.md)
+[../synthea-quirks/synthea-clean-input.md](../synthea-quirks/synthea-clean-input.md)
 catalogues Synthea's own data-quality quirks in this dataset, and the
 legitimate null / business-logic patterns that can be mistaken for defects.
 
